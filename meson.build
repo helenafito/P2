@@ -1,0 +1,1 @@
+project('Pràctica 2 PAV - detección de actividad vocal', 'c')
