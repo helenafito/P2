@@ -1,4 +1,4 @@
-project('Pràctica 2 PAV - detección de actividad vocal', 'c')
+project('Practica 2 de PAV, detección de actividad vocal','c')
 
 exe = 'vad'
 src = ['src/main_vad.c', 'src/vad.c', 'src/pav_analysis.c']
