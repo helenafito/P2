@@ -4,3 +4,6 @@
 !/scripts/
 !/src/
 !/img/
+.DS_Store
+*ZoneIdentifier
+__*
