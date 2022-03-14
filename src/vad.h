@@ -18,6 +18,8 @@ typedef struct {
   float last_feature; /* for debuggin purposes */
   float p1;
   float alpha1;
+  int ninit, Ninitmax;
+  float potsil;
 } VAD_DATA;
 
 /* Call this function before using VAD: 

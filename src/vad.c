@@ -47,7 +47,7 @@ Features compute_features(const float *x, int N) {
   feat.zcr = compute_zcr(x, N, 16000);
   feat.p = compute_power(x, N);
   feat.am = compute_am(x, N);
-  feat.nl = compute_nl(x);
+
 
   return feat;
 }
@@ -62,6 +62,9 @@ VAD_DATA * vad_open(float rate, float alpha1) {
   vad_data->sampling_rate = rate;
   vad_data->frame_length = rate * FRAME_TIME * 1e-3;
   vad_data->alpha1 = alpha1;
+  vad_data->potsil = -1e12;
+  vad_data->Ninitmax = 10;
+  vad_data->ninit = 0;
   return vad_data;
 }
 
@@ -91,13 +94,24 @@ VAD_STATE vad(VAD_DATA *vad_data, float *x) {
    * program finite state automaton, define conditions, etc.
    */
 
+  
   Features f = compute_features(x, vad_data->frame_length);
   vad_data->last_feature = f.p; /* save feature, in case you want to show */
 
   switch (vad_data->state) {
-  case ST_INIT:
-    vad_data->p1 = f.p + f.nl/*vad_data->alpha1*/;
-    vad_data->state = ST_SILENCE;
+  case ST_INIT://contador que se queda en el init
+    //vad_data->p1 = f.p + vad_data->alpha1;
+    if ( vad_data->ninit < vad_data->Ninitmax){
+      vad_data->potsil= fmax(f.p, vad_data->potsil);
+      vad_data->ninit++;
+    }
+    else{
+      vad_data->p1 = vad_data->potsil + vad_data->alpha1;
+      vad_data->state = ST_SILENCE;
+    }
+    
+    
+    //vad_data->state = ST_SILENCE;
     break;
 
   case ST_SILENCE:
@@ -118,7 +132,7 @@ VAD_STATE vad(VAD_DATA *vad_data, float *x) {
       vad_data->state == ST_VOICE)
     return vad_data->state;
   else
-    return ST_UNDEF;
+    return ST_SILENCE;
 }
 
 void vad_show_state(const VAD_DATA *vad_data, FILE *out) {

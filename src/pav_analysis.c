@@ -2,16 +2,6 @@
 #include "pav_analysis.h"
 #define SGN(x) ((x>0) ? 1 : ((x<0) ? -1 : 0))
 
-float compute_nl(const float *x){
-    float noise_power = 1.0e-12f;
-
-    for ( int i=0; i < 9600; i++){
-        if(x[i+1]>x[i]){
-            noise_power=x[i+1];
-        }
-    }
-    return 10*log10f(noise_power);
-}
 
 float compute_power(const float *x, unsigned int N) {
     float power = 1.0e-12f;
