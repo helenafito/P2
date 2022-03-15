@@ -1,10 +1,16 @@
 #!/bin/bash
 
 if  [ $# -ne 1 ] ; then 
-    echo usage: $0 alpha1
-    exit 1
+   echo usage: $0 alpha1
+   exit 1
 fi
 alpha1=$1
+
+#if  [ $# -ne 1 ] ; then 
+ #   echo usage: $0 Ninitmax
+  #  exit 1
+#fi
+#Ninitmax=$
 
 # Be sure that this file has execution permissions:
 # Use the nautilus explorer or chmod +x run_vad.sh
