@@ -14,7 +14,7 @@ const float FRAME_TIME = 10.0F; /* in ms. */
  */
 
 const char *state_str[] = {
-  "UNDEF", "S", "V", "INIT"
+  "UNDEF", "S", "V", "INIT","MV","MS",
 };
 
 const char *state2str(VAD_STATE st) {
@@ -26,7 +26,6 @@ typedef struct {
   float zcr;
   float p;
   float am;
-  float nl;
 } Features;
 
 /* 
@@ -63,8 +62,9 @@ VAD_DATA * vad_open(float rate, float alpha1) {
   vad_data->frame_length = rate * FRAME_TIME * 1e-3;
   vad_data->alpha1 = alpha1;
   vad_data->potsil = -1e12;
-  vad_data->Ninitmax = 10;
+  vad_data->Ninitmax = 8 ;
   vad_data->ninit = 0;
+  vad_data->counter=0;
   return vad_data;
 }
 
@@ -72,7 +72,7 @@ VAD_STATE vad_close(VAD_DATA *vad_data) {
   /* 
    * TODO: decide what to do with the last undecided frames
    */
-  VAD_STATE state = vad_data->state;
+  VAD_STATE state = /*vad_data->state*/ST_SILENCE;
 
   free(vad_data);
   return state;
@@ -93,46 +93,80 @@ VAD_STATE vad(VAD_DATA *vad_data, float *x) {
    * TODO: You can change this, using your own features,
    * program finite state automaton, define conditions, etc.
    */
-
+  
   
   Features f = compute_features(x, vad_data->frame_length);
   vad_data->last_feature = f.p; /* save feature, in case you want to show */
 
   switch (vad_data->state) {
   case ST_INIT://contador que se queda en el init
-    //vad_data->p1 = f.p + vad_data->alpha1;
+    //vad_data->k1 = f.p + vad_data->alpha1;
     if ( vad_data->ninit < vad_data->Ninitmax){
-      vad_data->potsil= fmax(f.p, vad_data->potsil);
+
+     // vad_data->potsil+= pow(10,(f.p/10));
+      vad_data->potsil = fmax(f.p,vad_data->potsil); //+ vad_data->potsil;
       vad_data->ninit++;
     }
     else{
-      vad_data->p1 = vad_data->potsil + vad_data->alpha1;
+      vad_data->k1 =vad_data->potsil+vad_data->alpha1;
+      vad_data->k2 = vad_data->potsil + 7.6;
       vad_data->state = ST_SILENCE;
+
     }
     
-    
-    //vad_data->state = ST_SILENCE;
     break;
 
   case ST_SILENCE:
-    if (f.p > vad_data->p1)
-      vad_data->state = ST_VOICE;
+    if (f.p > vad_data->k1){
+      vad_data->state = ST_MV;
+    }
     break;
 
   case ST_VOICE:
-    if (f.p < vad_data->p1)
-      vad_data->state = ST_SILENCE;
+    if (f.p < vad_data->k1){
+      vad_data->state = ST_MS;
+    }
     break;
+
+  case ST_MS:
+  vad_data->counter++;
+   if (vad_data->counter== 4  ){
+     vad_data->state = ST_SILENCE;
+     vad_data->counter=0;
+   }
+   if(f.p > vad_data->k1 && f.zcr > 30 ){
+     vad_data->state = ST_VOICE;
+     vad_data->counter=0;
+   }
+   
+  break;
+
+  case ST_MV:
+  vad_data->counter++;
+    if(f.p > vad_data->k2){
+      vad_data->state = ST_VOICE;
+      vad_data->counter=0;
+    }
+    else if(vad_data->counter==10){
+      vad_data->state = ST_SILENCE;
+      vad_data->counter=0;
+    }
+    
+  break;
 
   case ST_UNDEF:
     break;
   }
 
+  if(vad_data->state == ST_INIT){
+    return ST_SILENCE;
+  }
   if (vad_data->state == ST_SILENCE ||
       vad_data->state == ST_VOICE)
     return vad_data->state;
   else
-    return ST_SILENCE;
+    return ST_UNDEF;
+    
 }
 
 void vad_show_state(const VAD_DATA *vad_data, FILE *out) {
