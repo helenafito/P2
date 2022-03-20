@@ -62,7 +62,7 @@ VAD_DATA * vad_open(float rate, float alpha1) {
   vad_data->frame_length = rate * FRAME_TIME * 1e-3;
   vad_data->alpha1 = alpha1;
   vad_data->potsil = -1e12;
-  vad_data->Ninitmax = 8 ;
+  vad_data->Ninitmax = 9 ;
   vad_data->ninit = 0;
   vad_data->counter=0;
   return vad_data;
@@ -103,51 +103,64 @@ VAD_STATE vad(VAD_DATA *vad_data, float *x) {
     //vad_data->k1 = f.p + vad_data->alpha1;
     if ( vad_data->ninit < vad_data->Ninitmax){
 
-     // vad_data->potsil+= pow(10,(f.p/10));
-      vad_data->potsil = fmax(f.p,vad_data->potsil); //+ vad_data->potsil;
+     //vad_data->potsil+= pow(10,(f.p/10));
+      vad_data->potsil = fmax(f.p,vad_data->potsil + 0.1); //+ vad_data->potsil;
       vad_data->ninit++;
     }
-    else{
-      vad_data->k1 =vad_data->potsil+vad_data->alpha1;
-      vad_data->k2 = vad_data->potsil + 7.6;
-      vad_data->state = ST_SILENCE;
 
-    }
+    else{
+      vad_data->k1 =vad_data->potsil+vad_data->alpha1 + 0.1;
+      vad_data->k2 = vad_data->potsil + 7.3;
+      vad_data->state = ST_SILENCE;
+       }
     
     break;
 
   case ST_SILENCE:
-    if (f.p > vad_data->k1){
+    if (f.p > vad_data->k1 - 0.4){
       vad_data->state = ST_MV;
     }
     break;
 
   case ST_VOICE:
-    if (f.p < vad_data->k1){
+    if (f.p < vad_data->k1 + 0.1 ){
       vad_data->state = ST_MS;
     }
     break;
 
   case ST_MS:
   vad_data->counter++;
-   if (vad_data->counter== 4  ){
+   if (vad_data->counter== 4){
      vad_data->state = ST_SILENCE;
      vad_data->counter=0;
    }
-   if(f.p > vad_data->k1 && f.zcr > 30 ){
+   if(f.p > vad_data->k1 && f.zcr){
      vad_data->state = ST_VOICE;
      vad_data->counter=0;
    }
-   
+   if(f.am > 1.9e-4 ){
+    vad_data->state = ST_MV;
+    vad_data->counter=0;
+   }
+
+   if(f.p > vad_data->k1 && f.p < vad_data->k1 + 0.8 ){
+      vad_data->state = ST_VOICE;
+       vad_data->counter=0;
+    }
+  
   break;
 
   case ST_MV:
   vad_data->counter++;
-    if(f.p > vad_data->k2){
+    if(f.p > vad_data->k2 - 0.2){
       vad_data->state = ST_VOICE;
       vad_data->counter=0;
     }
-    else if(vad_data->counter==10){
+    if(f.am<1e-4 ){
+    vad_data->state = ST_SILENCE;
+    vad_data->counter=0;
+   }
+    else if(vad_data->counter==9){
       vad_data->state = ST_SILENCE;
       vad_data->counter=0;
     }
