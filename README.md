@@ -103,6 +103,8 @@ Ejercicios
 En esta práctica hemos implementado un programa de detección de voz. Nuestro programa funciona con dos umbrales y una máquina de estados.
 Como tenemos una señal poco ruidosa, decidimos utilizar como principal umbral el Valor máximo de la potencia de las primeras muestras, que teníamos claro que contenían silencio.
 
+<img src="intro1.png" width="640" align="center">
+
 ### Etiquetado manual de los segmentos de voz y silencio
 
 - Etiquete manualmente los segmentos de voz y silencio del fichero grabado al efecto. Inserte, a 
