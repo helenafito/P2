@@ -116,11 +116,12 @@ Ejercicios
 	  estar seguros de que un segmento de señal se corresponde con voz.
 	  Entre 25 y 28 dB.
 
-	* Duración mínima razonable de los segmentos de voz y silencio.
+	Duración mínima razonable de los segmentos de voz y silencio.
 	Segmentos de silencio: 0,03 s
 	Segmentos de voz :0.2s
 
 	* ¿Es capaz de sacar alguna conclusión a partir de la evolución de la tasa de cruces por cero?
+	
 	La tasa de cruces por cero es una buena manera de distinguir entre una consonante sorda 
 	y el ruido, ya que las primeras tienen mas cruces por zero que las segundas.
 
