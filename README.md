@@ -131,6 +131,8 @@ Ejercicios
 
 - Inserte una gráfica en la que se vea con claridad la señal temporal, el etiquetado manual y la detección automática conseguida para el fichero grabado al efecto. 
 
+Esta es la comparativa de nuestro fichero .lab con el fichero generado por vad.c
+
 <img src="captura3.png" width="640" align="center">
 
 - Explique, si existen. las discrepancias entre el etiquetado manual y la detección automática.
