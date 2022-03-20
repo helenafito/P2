@@ -105,8 +105,7 @@ Ejercicios
   continuación, una captura de `wavesurfer` en la que se vea con claridad la señal temporal, el contorno de
   potencia y la tasa de cruces por cero, junto con el etiquetado manual de los segmentos.
 
-<img src="PAV/P2/captura1.png" width="640" align="center">
-<img src="img/tanh.png" width="640" align="center">
+
 <img src="captura1.png" width="640" align="center">
 
 
