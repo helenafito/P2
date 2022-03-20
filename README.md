@@ -137,10 +137,13 @@ Esta es la comparativa de nuestro fichero .lab con el fichero generado por vad.c
 
 - Explique, si existen. las discrepancias entre el etiquetado manual y la detección automática.
 
+Podemos observar que vad.c detecta algunos de los picos ruiodos como voz a pesar de que no lo son, sobretodo en los momentos de respiración entre palabras.
+
 - Evalúe los resultados sobre la base de datos `db.v4` con el script `vad_evaluation.pl` e inserte a 
   continuación las tasas de sensibilidad (*recall*) y precisión para el conjunto de la base de datos (sólo
   el resumen).
 
+<img src="tasasens.png" width="640" align="center">
 
 ### Trabajos de ampliación
 
