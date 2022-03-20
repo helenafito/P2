@@ -107,6 +107,8 @@ Ejercicios
 
 <img src="PAV/P2/captura1.png" width="640" align="center">
 <img src="img/tanh.png" width="640" align="center">
+<img src="captura1.png" width="640" align="center">
+
 
 
 - A la vista de la gráfica, indique qué valores considera adecuados para las magnitudes siguientes:
