@@ -143,6 +143,8 @@ Podemos observar que vad.c detecta algunos de los picos ruidosos como voz a pesa
   continuación las tasas de sensibilidad (*recall*) y precisión para el conjunto de la base de datos (sólo
   el resumen).
 
+Estos han sido nuestros resultados con la base de datos, para ejecutar el programa, como hemos puesto alpha1 como un parametro: recomendamos la utilización de  scripts/run_vad.sh 1.4 . Debido a que este es el valor de alpha que maximiza la puntuación total.
+
 <img src="tasasens.png" width="640" align="center">
 
 ### Trabajos de ampliación
