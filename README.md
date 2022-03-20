@@ -98,6 +98,10 @@ Recuerde realizar el *pull request* una vez completada la práctica.
 
 Ejercicios
 ----------
+### Introducción:
+
+En esta práctica hemos implementado un programa de detección de voz. Nuestro programa funciona con dos umbrales y una máquina de estados.
+Como tenemos una señal poco ruidosa, decidimos utilizar como principal umbral el Valor máximo de la potencia de las primeras muestras, que teníamos claro que contenían silencio.
 
 ### Etiquetado manual de los segmentos de voz y silencio
 
@@ -126,12 +130,6 @@ Ejercicios
 	y el ruido, ya que las primeras tienen mas cruces por zero que las segundas.
 
 ### Desarrollo del detector de actividad vocal
--Introducción:
-En esta práctica hemos implementado un programa de detección de voz. Nuestro programa funciona con dos umbrales y una máquina de estados.
-Como tenemos una señal poco ruidosa, decidimos utilizar como principal umbral el Valor máximo de la potencia de las primeras muestras, que teníamos claro que contenían silencio.
-
-
-
 
 - Complete el código de los ficheros de la práctica para implementar un detector de actividad vocal tan
   exacto como sea posible. Tome como objetivo la maximización de la puntuación-F `TOTAL`.
