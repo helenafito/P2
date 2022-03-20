@@ -129,9 +129,9 @@ Ejercicios
 - Complete el código de los ficheros de la práctica para implementar un detector de actividad vocal tan
   exacto como sea posible. Tome como objetivo la maximización de la puntuación-F `TOTAL`.
 
-- Inserte una gráfica en la que se vea con claridad la señal temporal, el etiquetado manual y la detección
-  automática conseguida para el fichero grabado al efecto. 
+- Inserte una gráfica en la que se vea con claridad la señal temporal, el etiquetado manual y la detección automática conseguida para el fichero grabado al efecto. 
 
+<img src="captura3.png" width="640" align="center">
 
 - Explique, si existen. las discrepancias entre el etiquetado manual y la detección automática.
 
