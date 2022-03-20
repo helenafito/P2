@@ -106,7 +106,7 @@ Ejercicios
   potencia y la tasa de cruces por cero, junto con el etiquetado manual de los segmentos.
 
 
-<img src="captura1.png" width="640" align="center">
+<img src="captura2.png" width="640" align="center">
 
 
 
