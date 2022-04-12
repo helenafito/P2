@@ -98,6 +98,12 @@ Recuerde realizar el *pull request* una vez completada la práctica.
 
 Ejercicios
 ----------
+### Introducción:
+
+En esta práctica hemos implementado un programa de detección de voz. Nuestro programa funciona con dos umbrales y una máquina de estados.
+Como tenemos una señal poco ruidosa, decidimos utilizar como principal umbral el Valor máximo de la potencia de las primeras muestras, que teníamos claro que contenían silencio.
+
+<img src="intro1.png" width="640" align="center">
 
 ### Etiquetado manual de los segmentos de voz y silencio
 
@@ -105,7 +111,9 @@ Ejercicios
   continuación, una captura de `wavesurfer` en la que se vea con claridad la señal temporal, el contorno de
   potencia y la tasa de cruces por cero, junto con el etiquetado manual de los segmentos.
 
-<img src="PAV/P2/cap1.PNG" width="640" align="center">
+
+<img src="captura2.png" width="640" align="center">
+
 
 
 - A la vista de la gráfica, indique qué valores considera adecuados para las magnitudes siguientes:
@@ -114,11 +122,12 @@ Ejercicios
 	  estar seguros de que un segmento de señal se corresponde con voz.
 	  Entre 25 y 28 dB.
 
-	* Duración mínima razonable de los segmentos de voz y silencio.
+	Duración mínima razonable de los segmentos de voz y silencio.
 	Segmentos de silencio: 0,03 s
 	Segmentos de voz :0.2s
 
 	* ¿Es capaz de sacar alguna conclusión a partir de la evolución de la tasa de cruces por cero?
+	
 	La tasa de cruces por cero es una buena manera de distinguir entre una consonante sorda 
 	y el ruido, ya que las primeras tienen mas cruces por zero que las segundas.
 
@@ -127,17 +136,27 @@ Ejercicios
 - Complete el código de los ficheros de la práctica para implementar un detector de actividad vocal tan
   exacto como sea posible. Tome como objetivo la maximización de la puntuación-F `TOTAL`.
 
-- Inserte una gráfica en la que se vea con claridad la señal temporal, el etiquetado manual y la detección
-  automática conseguida para el fichero grabado al efecto. 
+- Inserte una gráfica en la que se vea con claridad la señal temporal, el etiquetado manual y la detección automática conseguida para el fichero grabado al efecto. 
 
+Esta es la comparativa de nuestro fichero .lab con el fichero generado por vad.c
+
+<img src="captura3.png" width="640" align="center">
 
 - Explique, si existen. las discrepancias entre el etiquetado manual y la detección automática.
+
+Podemos observar que vad.c detecta algunos de los picos ruidosos como voz a pesar de que no lo son, sobretodo en los momentos de respiración entre palabras.
 
 - Evalúe los resultados sobre la base de datos `db.v4` con el script `vad_evaluation.pl` e inserte a 
   continuación las tasas de sensibilidad (*recall*) y precisión para el conjunto de la base de datos (sólo
   el resumen).
 
+<<<<<<< HEAD
 P
+=======
+Estos han sido nuestros resultados con la base de datos, para ejecutar el programa, como hemos puesto alpha1 como un parametro: recomendamos la utilización de  scripts/run_vad.sh 1.4 . Debido a que este es el valor de alpha que maximiza la puntuación total.
+
+<img src="tasasens.png" width="640" align="center">
+>>>>>>> 55ea4b3e7c3c6e61054e0f98e5607b1e843a8a9c
 
 ### Trabajos de ampliación
 
